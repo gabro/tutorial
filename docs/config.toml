@@ -1,0 +1,24 @@
+theme = "docdock"
+baseurl = "http://scalameta.org"
+languageCode = "en-us"
+title = "Scalameta"
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[params]
+themeVariant = "black"
+
+[[menu.shortcuts]]
+pre = "<h3>More</h3>"
+name = "<i class='fa fa-github'></i> GitHub repo"
+identifier = "ds"
+url = "https://github.com/scalameta/scalameta"
+weight = 1
+
+[[menu.shortcuts]]
+name = "<img class='share-view__badge' src='https://badges.gitter.im/scalameta/scalameta.svg'>"
+identifier = "gitter"
+url = "https://gitter.im/scalameta/scalameta"
+weight = 2
+
+
