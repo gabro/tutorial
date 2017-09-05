@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream
 import java.net.URLClassLoader
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
+import java.util
 import java.util.Calendar
 import scala.collection.mutable
 import scala.compat.Platform.EOL
@@ -21,6 +22,18 @@ import scalatags.Text.TypedTag
 import scalatags.Text.all._
 import scalatex.site.Highlighter
 import ammonite.ops._
+import com.vladsch.flexmark.ast
+import com.vladsch.flexmark.ast.Document
+import com.vladsch.flexmark.ast.FencedCodeBlock
+import com.vladsch.flexmark.ast.Node
+import com.vladsch.flexmark.ast.NodeVisitor
+import com.vladsch.flexmark.ast.VisitHandler
+import com.vladsch.flexmark.ast.Visitor
+import com.vladsch.flexmark.ext.anchorlink.internal.AnchorLinkPostProcessor
+import com.vladsch.flexmark.parser.PostProcessorFactory
+import com.vladsch.flexmark.parser.block.BlockPreProcessorFactory
+import com.vladsch.flexmark.parser.block.DocumentPostProcessor
+import com.vladsch.flexmark.parser.block.DocumentPostProcessorFactory
 import org.langmeta.internal.io.FileIO
 import org.langmeta.internal.io.PathIO
 import org.pegdown.PegDownProcessor
@@ -55,6 +68,81 @@ object Tutorial extends ScalametaSite("tutorial", scalatex.tutorial.Readme()) {
 }
 
 object Readme {
+  class CodePostProcessor extends DocumentPostProcessor {
+    val handler: NodeVisitor =
+      new NodeVisitor(
+        new VisitHandler(
+          classOf[FencedCodeBlock],
+          new Visitor[FencedCodeBlock] {
+            override def visit(node: FencedCodeBlock): Unit = {
+              import scala.collection.JavaConverters._
+              val t = new ast.Text("\n look at me!")
+              node.removeChildren()
+              node.appendChild(t)
+              logger.elem(
+                node.getOpeningFence,
+                node.toAstString(true),
+                node.getInfo,
+                node.getContentChars,
+                node.getChildren.asScala.toList,
+                node.getOpeningMarker
+              )
+            }
+          }
+        )
+      )
+    override def processDocument(document: ast.Document): ast.Document = {
+      handler.visit(document)
+      document
+    }
+  }
+  object CodePostProcessor {
+    object Factory extends DocumentPostProcessorFactory {
+      override def create(document: Document) = {
+        new CodePostProcessor()
+      }
+    }
+  }
+  def flexmark(file: String): Text.RawFrag = {
+    import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension
+    import com.vladsch.flexmark.ext.tables.TablesExtension
+    import com.vladsch.flexmark.html.HtmlRenderer
+    import com.vladsch.flexmark.parser.Parser
+    import com.vladsch.flexmark.util.options.MutableDataSet
+    val options = new MutableDataSet()
+    options.set(
+      Parser.EXTENSIONS,
+      util.Arrays
+        .asList(TablesExtension.create(), StrikethroughExtension.create())
+    );
+
+    val quasiquotes =
+      """
+        |# h1
+        |
+        |Hello world.
+        |
+        |```scala
+        |val x = 1
+        |```
+        |
+        |Utag.
+      """.stripMargin
+//      scala.io.Source
+//      .fromURL(
+//        "https://raw.githubusercontent.com/scalameta/scalameta/master/notes/quasiquotes.md")
+//      .mkString
+    val parser =
+      Parser
+        .builder(options)
+        .postProcessorFactory(CodePostProcessor.Factory)
+        .build()
+    val renderer = HtmlRenderer.builder(options).build
+    // You can re-use parser and renderer instances
+    val document = parser.parse(quasiquotes)
+    val html = renderer.render(document)
+    raw(html)
+  }
 
   def main(args: Array[String]): Unit = {
     try {
@@ -70,8 +158,8 @@ object Readme {
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
     val text = s"(c) 2014 - $currentYear scalameta contributors"
     div(
-      style := "margin: 0px;color: #ccc;text-align: center;padding: 0.5em 2em 0.5em 0em;border-top: 1px solid #eee;display: block;")(
-      text)
+      style := "margin: 0px;color: #ccc;text-align: center;padding: 0.5em 2em 0.5em 0em;border-top: 1px solid #eee;display: block;"
+    )(text)
   }
 
   lazy val iloopCacheFile: File =
@@ -109,9 +197,7 @@ object Readme {
   def database: Database = {
     val cp = Classpath(BuildInfo.semanticClassdirectory)
     val db = Database.load(cp)
-    assert(
-      db.documents.nonEmpty,
-      s"""db.documents.nonEmpty.
+    assert(db.documents.nonEmpty, s"""db.documents.nonEmpty.
          |$db
          |$cp
          |""".stripMargin)
@@ -127,7 +213,8 @@ object Readme {
         frag.lines
           .withFilter(_.nonEmpty)
           .map(_.takeWhile(_ == ' ').length)
-          .min).getOrElse(0)
+          .min
+      ).getOrElse(0)
     frag.lines.map(_.stripPrefix(toStrip)).mkString("\n")
   }
 
@@ -192,11 +279,13 @@ object Readme {
       RedFlag(
         "Abandoning crashed session.",
         "compilation crash",
-        "crash in repl invocation"),
+        "crash in repl invocation"
+      ),
       RedFlag(
         s"error:",
         "compilation error",
-        "compilation error in repl invocation")
+        "compilation error in repl invocation"
+      )
     )
 
     def validatePrintout(printout: String): Unit = {

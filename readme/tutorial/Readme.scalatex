@@ -13,6 +13,7 @@
     @lnk("scala.world", "http://scala.world") conference.
     The workshop material turned out to be useful for many so it has been moved here.
     You will still find occasional references to scala.world.
+  @flexmark("")
   @scalatex.tutorial.Video()
   @scalatex.tutorial.Setup()
   @scalatex.tutorial.Tokens()

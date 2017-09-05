@@ -74,6 +74,7 @@ lazy val readme = scalatex
     test := run.in(Compile).toTask(" --validate-links").value,
     libraryDependencies += scalameta,
     libraryDependencies += contrib,
+    libraryDependencies += "com.vladsch.flexmark" % "flexmark-all" % "0.26.4",
     libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value,
     publish := {
       ghpagesPushSite
