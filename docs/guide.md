@@ -8,8 +8,8 @@ Scalameta is a library you can use to read, analyze, transform and generate
 Scala programs. In this guide, you will learn how to use Scalameta to
 
 - parse source code into syntax trees
-- construct syntax trees by hand
-- construct syntax trees with quasi-quotes
+- construct new syntax trees
+- pattern match syntax trees
 - traverse syntax trees
 - transform syntax trees
 
@@ -18,7 +18,7 @@ started!
 
 ## Installation
 
-To use Scalameta you add a dependency on it in your build. Scalameta supports
+Add a dependency to Scalameta in your build to get started. Scalameta supports
 Scala 2.11, Scala 2.12, Scala.js and Scala Native.
 
 ### sbt
@@ -33,7 +33,7 @@ libraryDependencies += "org.scalameta" %%% "scalameta" % "@VERSION@"
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.scalameta/scalameta_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.scalameta/scalameta_2.12)
 
-All examples in this guide assume you have the following import
+All code examples assume you have the following import
 
 ```scala mdoc:silent
 import scala.meta._
@@ -53,11 +53,28 @@ import $ivy.`org.scalameta::scalameta:@VERSION@`, scala.meta._
 
 You can try out Scalameta online with the [Scastie playground](scastie.md).
 
-## Parse trees from source code
+## Parse trees
+### From source code
+### From files
+### From strings
+### From programs with top-level statements like scripts and sbt files
+## Construct trees
+### With normal constructors
+### With quasi-quotes
+## Pattern match trees
+### With normal constructors
+### With quasi-quotes
+## Compare trees for equality
+## Traverse trees
+### Simple traversal
+### Custom traversal
+## Transform trees
+### Simple transform
+### Custom transform
 
 You can parse source code from a string
 
-```scala mdoc
+```scala mdoc:silent
 val programString = "a + b"
 val tree = programString.parse[Term].get
 ```
