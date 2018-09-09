@@ -48,3 +48,7 @@
     max-width: 1100px;
   }
 }
+
+article a {
+  text-decoration: underline;
+}

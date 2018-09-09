@@ -12,6 +12,11 @@ object Main {
           "VERSION" -> BuildInfo.scalameta
         )
       )
+      .withStringModifiers(
+        List(
+          new mdoc.modifiers.ScastieModifier("light")
+        )
+      )
       .withArgs(args.toList)
     val exit = mdoc.Main.process(settings)
     sys.exit(exit)

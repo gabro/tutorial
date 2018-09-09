@@ -30,7 +30,7 @@ class Footer extends React.Component {
           )}
           <div>
             <h5>Docs</h5>
-            <a href={` ${this.props.config.baseUrl}docs/installation.html`}>
+            <a href={` ${this.props.config.baseUrl}docs/guide.html`}>
               Installation
             </a>
           </div>

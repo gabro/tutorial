@@ -21,7 +21,7 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: "tutorial", label: "Docs" },
+    { doc: "guide", label: "Docs" },
     { href: repoUrl, label: "GitHub", external: true }
   ],
 
@@ -39,7 +39,7 @@ const siteConfig = {
     secondaryColor: "#181A1F"
   },
 
-  customDocsPath: 'website/target/docs',
+  customDocsPath: "website/target/docs",
 
   // This copyright info is used in /core/Footer.js and blog rss/atom feeds.
   copyright: `Copyright © ${new Date().getFullYear()} Scalameta`,

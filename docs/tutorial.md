@@ -1,28 +1,57 @@
 ---
-id: tutorial
-title: Getting started
+id: guide
+sidebar_label: Guide
+title: Scalameta Guide
 ---
 
-Start by adding a dependency on Scalameta
+Scalameta is a library to read, analyze, transform and generate Scala programs.
+In this document, you will learn how to use Scalameta to
+
+- parse source code into syntax trees
+- construct syntax trees with quasi-quotes and normal constructors
+- traverse syntax trees
+- transform syntax trees
+
+Let's get started!
+
+## Installation
+
+Scalameta is a library that you depend on in your build. Scalameta supports the
+Scala versions 2.11 and Scala 2.12 and runs on the JVM,
+[Scala.js](http://www.scala-js.org/) and
+[Scala Native](http://www.scala-native.org/).
+
+### sbt
 
 ```scala
 // build.sbt
 libraryDependencies += "org.scalameta" %% "scalameta" % "@VERSION@"
 
-// For Scala.js or Scala Native
+// For Scala.js, Scala Native
 libraryDependencies += "org.scalameta" %%% "scalameta" % "@VERSION@"
-
-// Ammonite REPL
-import $ivy.`org.scalameta::scalameta:@VERSION@`, scala.meta._
 ```
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.scalameta/scalameta_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.scalameta/scalameta_2.12)
 
-All of the examples below assume you have the following import
+All of the examples in this document assume you have the following import
 
-```scala mdoc
+```scala mdoc:silent
 import scala.meta._
 ```
+
+### Ammonite REPL
+
+A great way to experiment Scalameta is to use the
+[Ammonite REPL](http://ammonite.io/#Ammonite-REPL).
+
+```scala
+// Ammonite REPL
+import $ivy.`org.scalameta::scalameta:@VERSION@`, scala.meta._
+```
+
+### Scastie
+
+You can try out Scalameta online with the [Scastie playground](scastie.md).
 
 ## Parse trees from source code
 
