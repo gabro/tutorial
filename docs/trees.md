@@ -282,13 +282,84 @@ val allArguments = List(arguments, arguments2)
 println(q"function(...$allArguments)")
 ```
 
+A common mistake is to splice an empty type parameter list into type application
+nodes . Imagine we have a list of type arguments that happens to be empty
+
+```scala mdoc:silent
+val typeArguments = List.empty[Type]
+```
+
+If we directly splice the lists into a type application we get a cryptic error
+message "invariant failed"
+
+```scala mdoc:crash
+q"function[..$typeArguments]()"
+```
+
+The quasiquote above is equivalent to calling the normal constructor
+`Type.ApplyType(.., typeArguments)`. Scalameta trees perform strict runtime
+validation for invariants such as "type application arguments must be
+non-empty". To fix this problem, guard the splice against the length of the list
+
+```scala mdoc
+println(
+  (if (typeArguments.isEmpty) q"function()"
+   else q"function[..$typeArguments]()").structure
+)
+```
+
 To learn more about quasiquotes, consult the [quasiquote spec](quasiquotes.md).
 
 ## Pattern match trees
 
+Use pattern matching to target interesting tree nodes and deconstruct them. A
+core design principle of Scalameta trees is that tree pattern matching is the
+dual of tree construction. If you know how to construct a tree, you know how to
+de-construct it.
+
 ### With normal constructors
 
+Normal constructors work in pattern position the same way they work in regular
+term position.
+
+```scala mdoc
+"function(arg1, arg2)".parse[Term].get match {
+  case Term.Apply(function, List(arg1, arg2)) =>
+    println("1 " + function)
+    println("2 " + arg1)
+    println("3 " + arg2)
+}
+```
+
+Repeated fields are always `List[T]`, so you can safely deconstruct trees with
+the `List(arg1, arg2)` syntax or if you prefer the `arg1 :: arg2 :: Nil` syntax.
+There is no need to use `Seq(arg1, arg2)` or `arg1 +: arg2 +: Nil`.
+
 ### With quasiquotes
+
+Quasiquotes expand at compile-time and work the same way in pattern position as
+in term position
+
+```scala mdoc
+Term.Apply(
+  Term.Name("function"),
+  List(Term.Name("arg1"), Term.Name("arg2"))
+) match {
+  case q"$function(..$args)" =>
+    println("1 " + function)
+    println("2 " + args)
+}
+```
+
+Use triple dollar splices `...$` to extract curried argument lists
+
+```scala mdoc
+"function(arg1, arg2)(arg3, arg4)".parse[Term].get match {
+  case q"$function(...$args)" =>
+    println("1 " + function)
+    println("2 " + args)
+}
+```
 
 ## Compare trees for equality
 

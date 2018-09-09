@@ -328,13 +328,100 @@ println(q"function(...$allArguments)")
 // function(arg1, arg2)(arg3, arg4)
 ```
 
+A common mistake is to splice an empty type parameter list into type application
+nodes . Imagine we have a list of type arguments that happens to be empty
+
+```scala
+val typeArguments = List.empty[Type]
+```
+
+If we directly splice the lists into a type application we get a cryptic error
+message "invariant failed"
+
+```scala
+q"function[..$typeArguments]()"
+// org.scalameta.invariants.InvariantFailedException: invariant failed:
+// when verifying targs.!=(null).&&(targs.nonEmpty)
+// found that targs.nonEmpty is false
+// where targs = List()
+// 	at org.scalameta.invariants.InvariantFailedException$.raise(Exceptions.scala:15)
+// 	at scala.meta.Term$ApplyType$.internal$49(Trees.scala:82)
+// 	at scala.meta.Term$ApplyType$.apply(Trees.scala:82)
+// 	at repl.Session.$anonfun$app$39(/Users/ollie/dev/scalameta-tutorial/docs/trees.md:195)
+```
+
+The quasiquote above is equivalent to calling the normal constructor
+`Type.ApplyType(.., typeArguments)`. Scalameta trees perform strict runtime
+validation for invariants such as "type application arguments must be
+non-empty". To fix this problem, guard the splice against the length of the list
+
+```scala
+println(
+  (if (typeArguments.isEmpty) q"function()"
+   else q"function[..$typeArguments]()").structure
+)
+// Term.Apply(Term.Name("function"), List())
+```
+
 To learn more about quasiquotes, consult the [quasiquote spec](quasiquotes.md).
 
 ## Pattern match trees
 
+Use pattern matching to target interesting tree nodes and deconstruct them. A
+core design principle of Scalameta trees is that tree pattern matching is the
+dual of tree construction. If you know how to construct a tree, you know how to
+de-construct it.
+
 ### With normal constructors
 
+Normal constructors work in pattern position the same way they work in regular
+term position.
+
+```scala
+"function(arg1, arg2)".parse[Term].get match {
+  case Term.Apply(function, List(arg1, arg2)) =>
+    println("1 " + function)
+    println("2 " + arg1)
+    println("3 " + arg2)
+}
+// 1 function
+// 2 arg1
+// 3 arg2
+```
+
+Repeated fields are always `List[T]`, so you can safely deconstruct trees with
+the `List(arg1, arg2)` syntax or if you prefer the `arg1 :: arg2 :: Nil` syntax.
+There is no need to use `Seq(arg1, arg2)` or `arg1 +: arg2 +: Nil`.
+
 ### With quasiquotes
+
+Quasiquotes expand at compile-time and work the same way in pattern position as
+in term position
+
+```scala
+Term.Apply(
+  Term.Name("function"),
+  List(Term.Name("arg1"), Term.Name("arg2"))
+) match {
+  case q"$function(..$args)" =>
+    println("1 " + function)
+    println("2 " + args)
+}
+// 1 function
+// 2 List(arg1, arg2)
+```
+
+Use triple dollar splices `...$` to extract curried argument lists
+
+```scala
+"function(arg1, arg2)(arg3, arg4)".parse[Term].get match {
+  case q"$function(...$args)" =>
+    println("1 " + function)
+    println("2 " + args)
+}
+// 1 function
+// 2 List(List(arg1, arg2), List(arg3, arg4))
+```
 
 ## Compare trees for equality
 
