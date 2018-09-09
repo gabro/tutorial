@@ -76,11 +76,10 @@ class HomeSplash extends React.Component {
     let language = this.props.language || "";
     return (
       <SplashContainer>
-        {/* <Logo img_src={imgUrl('scalameta-logo.png')} /> */}
         <div className="inner">
           <ProjectTitle />
           <PromoSection>
-            <Button href={docUrl("installation.html", language)}>
+            <Button href={docUrl("tutorial.html", language)}>
               Documentation
             </Button>
             <Button href={siteConfig.repoUrl} target="_blank">

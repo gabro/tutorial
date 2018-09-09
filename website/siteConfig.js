@@ -35,11 +35,11 @@ const siteConfig = {
 
   /* colors for website */
   colors: {
-    primaryColor: "#267443",
+    primaryColor: "#005124",
     secondaryColor: "#181A1F"
   },
 
-  customDocsPath: "out",
+  customDocsPath: 'website/target/docs',
 
   // This copyright info is used in /core/Footer.js and blog rss/atom feeds.
   copyright: `Copyright © ${new Date().getFullYear()} Scalameta`,

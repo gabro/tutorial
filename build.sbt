@@ -18,10 +18,14 @@ skip in publish := true
 lazy val docs = project
   .in(file("scalameta-docs"))
   .settings(
+    buildInfoKeys := Seq[BuildInfoKey](
+      "scalameta" -> scalameta
+    ),
+    buildInfoPackage := "docs",
     moduleName := "scalameta-docs",
     mainClass.in(Compile) := Some("docs.Main"),
     libraryDependencies ++= List(
       "org.scalameta" %% "testkit" % scalameta
     )
   )
-  .enablePlugins(DocusaurusPlugin)
+  .enablePlugins(BuildInfoPlugin, DocusaurusPlugin)
