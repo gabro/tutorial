@@ -11,7 +11,7 @@ const siteConfig = {
   baseUrl: "/",
 
   // Used for publishing and more
-  projectName: "scalameta.github.io",
+  projectName: "scalameta",
   organizationName: "olafurpg",
 
   // algolia: {
