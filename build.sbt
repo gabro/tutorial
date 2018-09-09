@@ -1,4 +1,5 @@
 def scalameta = "4.0.0-M11"
+def scalafix = "0.6.0-M20"
 def scala212 = "2.12.6"
 
 inThisBuild(
@@ -25,7 +26,8 @@ lazy val docs = project
     moduleName := "scalameta-docs",
     mainClass.in(Compile) := Some("docs.Main"),
     libraryDependencies ++= List(
-      "org.scalameta" %% "testkit" % scalameta
+      "org.scalameta" %% "testkit" % scalameta,
+      "ch.epfl.scala" %% "scalafix-core" % scalafix
     )
   )
   .enablePlugins(BuildInfoPlugin, DocusaurusPlugin)

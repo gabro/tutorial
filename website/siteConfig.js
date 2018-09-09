@@ -21,7 +21,7 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: "guide", label: "Docs" },
+    { doc: "trees", label: "Docs" },
     { href: repoUrl, label: "GitHub", external: true }
   ],
 
