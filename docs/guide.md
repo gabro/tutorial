@@ -18,9 +18,8 @@ started!
 
 ## Installation
 
-Scalameta is a library that you depend on in your build. Scalameta supports the
-Scala versions 2.11 and Scala 2.12 and runs on the JVM, Scala.js and Scala
-Native.
+To use Scalameta you add a dependency on it in your build. Scalameta supports
+Scala 2.11, Scala 2.12, Scala.js and Scala Native.
 
 ### sbt
 
@@ -34,7 +33,7 @@ libraryDependencies += "org.scalameta" %%% "scalameta" % "@VERSION@"
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.scalameta/scalameta_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.scalameta/scalameta_2.12)
 
-All of the examples in this document assume you have the following import
+All examples in this guide assume you have the following import
 
 ```scala mdoc:silent
 import scala.meta._
