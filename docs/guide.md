@@ -4,22 +4,23 @@ sidebar_label: Guide
 title: Scalameta Guide
 ---
 
-Scalameta is a library to read, analyze, transform and generate Scala programs.
-In this document, you will learn how to use Scalameta to
+Scalameta is a library you can use to read, analyze, transform and generate
+Scala programs. In this guide, you will learn how to use Scalameta to
 
 - parse source code into syntax trees
-- construct syntax trees with quasi-quotes and normal constructors
+- construct syntax trees by hand
+- construct syntax trees with quasi-quotes
 - traverse syntax trees
 - transform syntax trees
 
-Let's get started!
+This guide assumes you have basic knowledge of programming with Scala. Let's get
+started!
 
 ## Installation
 
 Scalameta is a library that you depend on in your build. Scalameta supports the
-Scala versions 2.11 and Scala 2.12 and runs on the JVM,
-[Scala.js](http://www.scala-js.org/) and
-[Scala Native](http://www.scala-native.org/).
+Scala versions 2.11 and Scala 2.12 and runs on the JVM, Scala.js and Scala
+Native.
 
 ### sbt
 

@@ -3,6 +3,6 @@ id: scastie
 title: Scastie playground
 ---
 
-```scala mdoc:scastie:olafurpg/epZ7zzs4Qk2LThjNPEyZOg
+```scala mdoc:scastie:olafurpg/lVeDktOuRci4NAzjWqkG9g
 
 ```
