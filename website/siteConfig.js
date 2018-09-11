@@ -8,7 +8,7 @@ const siteConfig = {
   title: "Scalameta",
   tagline: "Library to read, analyze, transform and generate Scala programs",
   url: "https://scalameta.org",
-  baseUrl: "/",
+  baseUrl: "/scalameta/",
 
   // Used for publishing and more
   projectName: "scalameta",
