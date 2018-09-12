@@ -109,10 +109,10 @@ const Features = props => {
     {
       title: "Established",
       content:
-        "Scalameta have over 100,000 unique module downloads a month, " +
+        "Scalameta has over 100,000 unique module downloads a month, " +
         "Scalameta quasiquotes have built-in support in IntelliJ, and " +
         "Scalameta is actively developed and maintained by engineers at Twitter, " +
-        "the Scala Center and from the community.",
+        "the Scala Center and members from the community.",
       image: docUrl("assets/established.png"),
       imageAlign: "right"
     }
