@@ -16,23 +16,7 @@ can be used to consume SemanticDB payloads and useful tips & tricks for working
 with SemanticDB. If you're looking for a comprehensive reference of SemanticDB
 features, check out [the specification](specification.md).
 
-- [Installation](#installation)
-- [Example](#example)
-- [What is SemanticDB good for?](#what-is-semanticdb-good-for)
-* [Producing SemanticDB](#producing-semanticdb)
-  * [Scalac compiler plugin](#scalac-compiler-plugin)
-  * [Metac](#metac)
-  * [sbt](#sbt)
-  * [Javac compiler plugin](#javac-compiler-plugin)
-  * [Metacp](#metacp)
-* [Consuming SemanticDB](#consuming-semanticdb)
-  * [Scala bindings](#scala-bindings)
-  * [Metap](#metap)
-  * [Protoc](#protoc)
-* [SemanticDB-based tools](#semanticdb-based-tools)
-  * [Scalafix](#scalafix)
-  * [Metadoc](#metadoc)
-  * [Metals](#metals)
+
 
 ## Installation
 

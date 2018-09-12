@@ -62,7 +62,7 @@ object ScalametaDocs {
       postProcess = { guide =>
         val toc =
           Pattern.compile(
-            "- \\[Installation.*#\\[Metals\\]\\(#metals\\)",
+            "- \\[Installation.*\\  \\* \\[Metals\\]\\(#metals\\)",
             Pattern.DOTALL)
         val header = Pattern.compile("^# SemanticDB.*")
         val semanticdb3 = Pattern.compile("\\(semanticdb3.md\\)")
