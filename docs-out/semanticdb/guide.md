@@ -1,5 +1,5 @@
 ---
-id: semanticdb/guide
+id: guide
 title: SemanticDB Guide
 sidebar_label: Guide
 ---

@@ -79,7 +79,7 @@ object ScalametaDocs {
   private def downloadFile(out: Path, md: MarkdownFile): Unit = {
     try {
       val uri = new URL(md.url)
-      val filename = Paths.get(md.id + ".md")
+      val filename = Paths.get(md.filename)
       val file = out.resolve(filename)
       val in = uri.openStream()
       val bytes =
