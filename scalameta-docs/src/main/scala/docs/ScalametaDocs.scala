@@ -37,7 +37,7 @@ object ScalametaDocs {
     MarkdownFile(
       title = "Quasiquotes Specification",
       id = "quasiquotes",
-      filename = "quasiquotes.md",
+      filename = "trees/quasiquotes.md",
       sidebarLabel = "Quasiquotes",
       url = s"$root/notes/quasiquotes.md"
     ),
@@ -58,7 +58,7 @@ object ScalametaDocs {
     ),
     MarkdownFile(
       title = "SemanticDB Specification",
-      id = "semanticdb",
+      id = "specification",
       filename = "semanticdb/specification.md",
       sidebarLabel = "Specification",
       url = s"$root/semanticdb/semanticdb3/semanticdb3.md",
