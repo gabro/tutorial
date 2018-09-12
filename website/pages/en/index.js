@@ -122,7 +122,7 @@ const Features = props => {
         "Scalameta quasiquotes have built-in support in IntelliJ, and " +
         "Scalameta is actively developed and maintained by engineers at Twitter, " +
         "the Scala Center and from the community.",
-      image: docUrl("assets/downloads.png"),
+      image: docUrl("assets/established.png"),
       imageAlign: "right"
     }
   ];

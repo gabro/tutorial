@@ -1,6 +1,6 @@
 {
   "docs": {
     "Trees": ["trees", "quasiquotes", "scastie"],
-    "SemanticDB": ["semanticdb"]
+    "SemanticDB": ["semanticdb/specification", "semanticdb/guide"]
   }
 }
